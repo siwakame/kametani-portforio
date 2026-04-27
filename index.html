@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>亀谷 たつや — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f7f6f2;
+      --text: #1a1a18;
+      --muted: #888880;
+      --border: #e0dfd8;
+      --accent: #1a1a18;
+      --surface: #efefea;
+    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Noto Sans JP', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.8;
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 5rem 2rem 6rem;
+    }
+
+    /* Hero */
+    .hero { margin-bottom: 4rem; }
+    .hero-name-jp {
+      font-size: 2.25rem;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+    .hero-name-en {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      font-weight: 300;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      margin-top: 6px;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-size: 0.75rem;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 2px;
+      padding: 3px 10px;
+      margin-top: 16px;
+      letter-spacing: 0.03em;
+    }
+    .hero-bio {
+      margin-top: 1.5rem;
+      font-size: 0.95rem;
+      color: #444440;
+      line-height: 1.9;
+      max-width: 560px;
+    }
+    .hero-links {
+      display: flex;
+      gap: 20px;
+      margin-top: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .hero-links a {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 2px;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .hero-links a:hover { color: var(--text); border-color: var(--text); }
+
+    /* Section */
+    .section { margin-bottom: 3.5rem; }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.68rem;
+      font-weight: 400;
+      color: var(--muted);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.25rem;
+    }
+
+    /* Hobbies */
+    .hobby-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(145px, 1fr));
+      gap: 8px;
+    }
+    .hobby-card {
+      background: var(--surface);
+      border-radius: 4px;
+      padding: 0.875rem 1rem;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: border-color 0.15s;
+      user-select: none;
+    }
+    .hobby-card:hover { border-color: var(--border); }
+    .hobby-card.open { border-color: #c8c8c0; }
+    .hobby-title {
+      font-size: 0.875rem;
+      font-weight: 500;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .hobby-arrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      color: var(--muted);
+      transition: transform 0.2s;
+      display: inline-block;
+    }
+    .hobby-card.open .hobby-arrow { transform: rotate(90deg); }
+    .hobby-desc {
+      font-size: 0.8rem;
+      color: #666660;
+      line-height: 1.65;
+      margin-top: 8px;
+      display: none;
+    }
+    .hobby-card.open .hobby-desc { display: block; }
+
+    /* Timeline */
+    .timeline { display: flex; flex-direction: column; }
+    .tl-item {
+      display: flex;
+      gap: 20px;
+      padding: 0.875rem 0;
+      border-top: 1px solid var(--border);
+    }
+    .tl-item:last-child { border-bottom: 1px solid var(--border); }
+    .tl-date {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      min-width: 72px;
+      padding-top: 3px;
+      flex-shrink: 0;
+      letter-spacing: 0.02em;
+    }
+    .tl-role { font-size: 0.875rem; font-weight: 500; }
+    .tl-place { font-size: 0.8rem; color: var(--muted); margin-top: 2px; }
+
+    /* Goals */
+    .goals { display: flex; flex-direction: column; }
+    .goal-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding: 0.75rem 0;
+      border-top: 1px solid var(--border);
+    }
+    .goal-item:last-child { border-bottom: 1px solid var(--border); }
+    .goal-dot {
+      width: 4px; height: 4px;
+      border-radius: 50%;
+      background: var(--muted);
+      margin-top: 9px;
+      flex-shrink: 0;
+    }
+    .goal-text { font-size: 0.875rem; line-height: 1.7; }
+
+    /* Footer */
+    .footer {
+      margin-top: 5rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: gap;
+    }
+    .footer-name {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+      letter-spacing: 0.08em;
+    }
+    .footer-copy {
+      font-family: 'DM Mono', monospace;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    /* Fade-in animation */
+    .hero, .section {
+      opacity: 0;
+      transform: translateY(16px);
+      animation: fadeUp 0.6s ease forwards;
+    }
+    .hero { animation-delay: 0.05s; }
+    .section:nth-child(2) { animation-delay: 0.15s; }
+    .section:nth-child(3) { animation-delay: 0.25s; }
+    .section:nth-child(4) { animation-delay: 0.35s; }
+    .section:nth-child(5) { animation-delay: 0.45s; }
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 480px) {
+      .container { padding: 3rem 1.25rem 4rem; }
+      .hero-name-jp { font-size: 1.75rem; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <div class="hero">
+      <div class="hero-name-jp">亀谷 たつや</div>
+      <div class="hero-name-en">TATSUYA KAMETANI</div>
+      <span class="hero-tag">開発者</span>
+      <p class="hero-bio">
+        はじめまして、亀谷と申します。現在20歳、大学を休学しながら製薬業界向けにAIサービスを提供しています。散歩やキャンプなどのアウトドアも余暇に楽しんでいます。
+      </p>
+      <div class="hero-links">
+        <a href="https://github.com/" target="_blank">GitHub</a>
+        <a href="https://twitter.com/" target="_blank">Twitter / X</a>
+        <a href="mailto:your@email.com">Contact</a>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Interests</div>
+      <div class="hobby-grid">
+        <div class="hobby-card" onclick="toggle(this)">
+          <div class="hobby-title">キャンプ <span class="hobby-arrow">›</span></div>
+          <div class="hobby-desc">自然の中でテントを張り、焚き火と星空を楽しむのが好きです。非日常を全身で感じる時間です。</div>
+        </div>
+        <div class="hobby-card" onclick="toggle(this)">
+          <div class="hobby-title">散歩 <span class="hobby-arrow">›</span></div>
+          <div class="hobby-desc">目的地を決めずにぶらぶら歩くのが好きです。思わぬ発見や、頭の整理にもなります。</div>
+        </div>
+        <div class="hobby-card" onclick="toggle(this)">
+          <div class="hobby-title">VR <span class="hobby-arrow">›</span></div>
+          <div class="hobby-desc">仮想空間で新しい体験や表現を探索しています。テクノロジーと感覚の境界線に興味があります。</div>
+        </div>
+        <div class="hobby-card" onclick="toggle(this)">
+          <div class="hobby-title">サイクリング <span class="hobby-arrow">›</span></div>
+          <div class="hobby-desc">ペダルを漕いで街や自然を走り抜ける爽快感が好きです。遠出も日課の一コマも楽しみます。</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Career</div>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-date">2025/12–</div>
+          <div>
+            <div class="tl-role">開発担当</div>
+            <div class="tl-place">株式会社リアンディール</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2024/11–</div>
+          <div>
+            <div class="tl-role">起業</div>
+            <div class="tl-place">SiwAI（製薬業界向けAIサービス）</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2024/8</div>
+          <div>
+            <div class="tl-role">YouTubeチャンネル売却</div>
+            <div class="tl-place">cosmosiwa</div>
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-date">2024/4–</div>
+          <div>
+            <div class="tl-role">在学（休学中）</div>
+            <div class="tl-place">筑波大学 理工学群 物理学類</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-label">Goals</div>
+      <div class="goals">
+        <div class="goal-item">
+          <div class="goal-dot"></div>
+          <div class="goal-text">選択肢の多い人生を歩む — チャレンジを惜しまない</div>
+        </div>
+        <div class="goal-item">
+          <div class="goal-dot"></div>
+          <div class="goal-text">身近な人に小さな喜びをシェアする</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="footer">
+      <span class="footer-name">TATSUYA KAMETANI</span>
+      <span class="footer-copy">&copy; 2025</span>
+    </div>
+
+  </div>
+
+  <script>
+    function toggle(card) {
+      const isOpen = card.classList.contains('open');
+      document.querySelectorAll('.hobby-card').forEach(c => c.classList.remove('open'));
+      if (!isOpen) card.classList.add('open');
+    }
+  </script>
+</body>
+</html>
